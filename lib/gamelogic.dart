@@ -23,6 +23,7 @@ String currentPlayer = 'Player X Move'; //X will always be player 1
 Icon xIcon = Icon(
   Icons.close,
   size: 70,
+  color: Colors.white,
 );
 Icon oIcon = Icon(
   Icons.radio_button_unchecked,
@@ -58,12 +59,7 @@ bool fullBoard(List<List<Icon>> board) {
   bool full = false;
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
-      if (board[i][j] == xIcon)
-        full = true;
-      else if (board[i][j] == oIcon)
-        full = true;
-      else
-        full = false;
+      if (board[i][j] == null) full = false;
     }
   }
   return full;
