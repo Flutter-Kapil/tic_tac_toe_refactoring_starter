@@ -21,7 +21,6 @@ bool legitMove(token t) {
 //default parameters
 String currentPlayer = 'Player X Move'; //X will always be player 1
 
-
 //function to change player based on currentPlayer value which is a string,
 changePlayer(String x) {
   if (x == 'Player X Move') {

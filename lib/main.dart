@@ -49,6 +49,33 @@ class _TicTacToePageState extends State<TicTacToePage> {
     }
   }
 
+  Widget singleExpandedBox(int row, int col) {
+    return Expanded(
+      child: OneBox(
+        buttonChild: getIconFromToken(board[row][col]),
+        colors: getColorFromBool(row, col),
+        onPressed: () {
+          updateBox(row, col);
+          setState(() {});
+        },
+      ),
+    );
+  }
+
+  Widget expandedRow(int row) {
+    return Expanded(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          singleExpandedBox(row, 0),
+          singleExpandedBox(row, 1),
+          singleExpandedBox(row, 2),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,120 +120,9 @@ class _TicTacToePageState extends State<TicTacToePage> {
                 margin: EdgeInsets.all(6),
                 child: Column(
                   children: <Widget>[
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[0][0]),
-                              colors: getColorFromBool(0, 0),
-                              onPressed: () {
-                                updateBox(0, 0);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[0][1]),
-                              colors: getColorFromBool(0, 1),
-                              onPressed: () {
-                                updateBox(0, 1);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[0][2]),
-                              colors: getColorFromBool(0, 2),
-                              onPressed: () {
-                                updateBox(0, 2);
-                                setState(() {});
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[1][0]),
-                              colors: getColorFromBool(1, 0),
-                              onPressed: () {
-                                updateBox(1, 0);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[1][1]),
-                              colors: getColorFromBool(1, 1),
-                              onPressed: () {
-                                updateBox(1, 1);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[1][2]),
-                              colors: getColorFromBool(1, 2),
-                              onPressed: () {
-                                updateBox(1, 2);
-                                setState(() {});
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[2][0]),
-                              colors: getColorFromBool(2, 0),
-                              onPressed: () {
-                                updateBox(2, 0);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[2][1]),
-                              colors: getColorFromBool(2, 1),
-                              onPressed: () {
-                                updateBox(2, 1);
-                                setState(() {});
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            child: OneBox(
-                              buttonChild: getIconFromToken(board[2][2]),
-                              colors: getColorFromBool(2, 2),
-                              onPressed: () {
-                                updateBox(2, 2);
-                                setState(() {});
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    expandedRow(0),
+                    expandedRow(1),
+                    expandedRow(2),
                   ],
                 ),
               ),
