@@ -17,6 +17,22 @@ class TicTacToePage extends StatefulWidget {
 }
 
 class _TicTacToePageState extends State<TicTacToePage> {
+  Widget getIconFromToken(token t) {
+    if (t == token.o) {
+      return Icon(
+        Icons.radio_button_unchecked,
+        size: 70,
+      );
+    }
+    if (t == token.x) {
+      return Icon(
+        Icons.close,
+        size: 70,
+      );
+    } else
+      return null;
+  }
+
   void winnerPopup() {
     if (winnerCheck(board)) {
       currentPlayer = "${currentPlayer.substring(7, 9)} Won";
@@ -78,7 +94,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                         children: <Widget>[
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[0][0],
+                              buttonChild: getIconFromToken(board[0][0]),
                               colors: colorBoard[0][0],
                               onPressed: () {
                                 updateBox(0, 0);
@@ -88,7 +104,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           ),
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[0][1],
+                              buttonChild: getIconFromToken(board[0][1]),
                               colors: colorBoard[0][1],
                               onPressed: () {
                                 updateBox(0, 1);
@@ -98,7 +114,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           ),
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[0][2],
+                              buttonChild: getIconFromToken(board[0][2]),
                               colors: colorBoard[0][2],
                               onPressed: () {
                                 updateBox(0, 2);
@@ -116,7 +132,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                         children: <Widget>[
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[1][0],
+                              buttonChild: getIconFromToken(board[1][0]),
                               colors: colorBoard[1][0],
                               onPressed: () {
                                 updateBox(1, 0);
@@ -126,7 +142,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           ),
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[1][1],
+                              buttonChild: getIconFromToken(board[1][1]),
                               colors: colorBoard[1][1],
                               onPressed: () {
                                 updateBox(1, 1);
@@ -136,7 +152,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           ),
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[1][2],
+                              buttonChild: getIconFromToken(board[1][2]),
                               colors: colorBoard[1][2],
                               onPressed: () {
                                 updateBox(1, 2);
@@ -154,7 +170,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                         children: <Widget>[
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[2][0],
+                              buttonChild: getIconFromToken(board[2][0]),
                               colors: colorBoard[2][0],
                               onPressed: () {
                                 updateBox(2, 0);
@@ -164,7 +180,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           ),
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[2][1],
+                              buttonChild: getIconFromToken(board[2][1]),
                               colors: colorBoard[2][1],
                               onPressed: () {
                                 updateBox(2, 1);
@@ -174,7 +190,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
                           ),
                           Expanded(
                             child: OneBox(
-                              buttonChild: board[2][2],
+                              buttonChild: getIconFromToken(board[2][2]),
                               colors: colorBoard[2][2],
                               onPressed: () {
                                 updateBox(2, 2);
@@ -229,9 +245,9 @@ class _TicTacToePageState extends State<TicTacToePage> {
   void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
       if (currentPlayer == 'Player X Move') {
-        board[r][c] = xIcon;
+        board[r][c] = token.x;
       } else {
-        board[r][c] = oIcon;
+        board[r][c] = token.o;
       }
       winnerPopup();
     }
