@@ -21,13 +21,15 @@ class _TicTacToePageState extends State<TicTacToePage> {
     if (t == token.o) {
       return Icon(
         Icons.radio_button_unchecked,
-        size: 70,
+        size: 75,
+        color: Colors.white,
       );
     }
     if (t == token.x) {
       return Icon(
         Icons.close,
-        size: 70,
+        size: 75,
+        color: Colors.white,
       );
     } else
       return null;
@@ -36,7 +38,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
   Color getColorFromBool(int row, int col) {
     return colorBoard[row][col]
         ? Colors.yellow.withOpacity(0.2)
-        : Colors.white24;
+        : Colors.white30;
   }
 
   void winnerPopup() {
@@ -84,7 +86,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/tictactoe03.jpg'), fit: BoxFit.fill)),
+                image: AssetImage('assets/background08.jpg'),
+                fit: BoxFit.cover)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
