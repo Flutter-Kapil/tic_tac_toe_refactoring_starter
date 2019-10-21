@@ -41,16 +41,6 @@ class _TicTacToePageState extends State<TicTacToePage> {
         : Colors.white30;
   }
 
-  void winnerPopup() {
-    if (winnerCheck(board)) {
-      currentPlayer = "${currentPlayer.substring(7, 9)} Won";
-    } else if (fullBoard(board)) {
-      currentPlayer = "draw";
-    } else {
-      changePlayer(currentPlayer);
-    }
-  }
-
   Widget singleExpandedBox(int row, int col) {
     return Expanded(
       child: OneBox(
@@ -169,12 +159,8 @@ class _TicTacToePageState extends State<TicTacToePage> {
 
   void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
-      if (currentPlayer == 'Player X Move') {
-        board[r][c] = token.x;
-      } else {
-        board[r][c] = token.o;
-      }
-      winnerPopup();
+      board[r][c] = currentPlayer;
+      changePlayerIfGameIsNotOver();
     }
   }
 }
