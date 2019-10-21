@@ -42,4 +42,34 @@ void main() {
     changePlayerIfGameIsNotOver();
     expect(currentPlayer, token.x);
   });
+
+  test('Test getCurrent Status if player O won', () {
+    currentPlayer = token.o;
+    board = [
+      [token.o, token.o, token.x],
+      [token.x, token.o, token.x],
+      [token.o, token.x, token.o]
+    ];
+    expect(getCurretStatus(), 'Player O won');
+  });
+
+  test('Test getCurrent Status if its a draw', () {
+    currentPlayer = token.x;
+    board = [
+      [token.x, token.o, token.x],
+      [token.x, token.o, token.x],
+      [token.o, token.x, token.o]
+    ];
+    expect(getCurretStatus(), 'draw');
+  });
+
+  test('Test getCurrent Status when next move is of Player O', () {
+    currentPlayer = token.x;
+    board = [
+      [token.x, token.o, token.x],
+      [token.x, token.o, token.x],
+      [token.o, null, token.o]
+    ];
+    expect(getCurretStatus(), 'Player X to move');
+  });
 }

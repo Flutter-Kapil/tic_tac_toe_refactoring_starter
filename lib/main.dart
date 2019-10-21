@@ -99,7 +99,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
               child: Container(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "$currentPlayer",
+                  getCurretStatus(),
                   style: TextStyle(
                       fontSize: 25,
                       color: Colors.white.withOpacity(0.6),

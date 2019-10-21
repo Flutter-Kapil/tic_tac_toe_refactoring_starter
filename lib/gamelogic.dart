@@ -139,3 +139,20 @@ void changePlayerIfGameIsNotOver() {
     changePlayer(currentPlayer);
   }
 }
+
+String getCurretStatus() {
+  if (winnerCheck(board) && currentPlayer == token.x) {
+    return 'Player X won';
+  }
+  if (winnerCheck(board) && currentPlayer == token.o) {
+    return 'Player O won';
+  }
+  if (fullBoard(board)) {
+    return 'draw';
+  } else
+    return 'Player ${getCurrentPlayerName()} to move';
+}
+
+String getCurrentPlayerName() {
+  return currentPlayer == token.x ? 'X' : 'O';
+}
