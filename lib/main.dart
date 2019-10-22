@@ -16,7 +16,8 @@ class TicTacToePage extends StatefulWidget {
   _TicTacToePageState createState() => _TicTacToePageState();
 }
 
-class _TicTacToePageState extends State<TicTacToePage> {
+class _TicTacToePageState extends State<TicTacToePage>
+    with SingleTickerProviderStateMixin {
   Widget getIconFromToken(token t) {
     if (t == token.o) {
       return Icon(
@@ -68,8 +69,31 @@ class _TicTacToePageState extends State<TicTacToePage> {
     );
   }
 
+  AnimationController statusTextController;
+  double endTweenValue = 1.0;
+
+  @override
+  void initState() {
+    statusTextController = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    );
+    statusTextController
+        .addStatusListener((AnimationStatus buttonAnimationStatus) {
+      if (buttonAnimationStatus == AnimationStatus.completed) {
+        statusTextController.reverse();
+      } else if (buttonAnimationStatus == AnimationStatus.dismissed) {
+        statusTextController.forward();
+      }
+    });
+    // TODO: implement initState
+  }
+
   @override
   Widget build(BuildContext context) {
+    CurvedAnimation smoothAnimation = CurvedAnimation(
+        parent: statusTextController, curve: Curves.elasticInOut);
+
     return Scaffold(
       backgroundColor: Color(0xFFD6AA7C),
       body: Container(
@@ -98,12 +122,19 @@ class _TicTacToePageState extends State<TicTacToePage> {
               flex: 1,
               child: Container(
                 alignment: Alignment.topCenter,
-                child: Text(
-                  getCurretStatus(),
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white.withOpacity(0.6),
-                      fontFamily: 'Quicksand'),
+                child: ScaleTransition(
+                  scale: Tween(begin: 1.0, end: endTweenValue)
+                      .animate(smoothAnimation),
+                  child: Text(
+                    getCurrentStatus(endTweenValue, () {
+                      statusTextController.forward();
+                      setState(() {});
+                    }),
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white.withOpacity(0.6),
+                        fontFamily: 'Quicksand'),
+                  ),
                 ),
               ),
             ),

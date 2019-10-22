@@ -50,7 +50,7 @@ void main() {
       [token.x, token.o, token.x],
       [token.o, token.x, token.o]
     ];
-    expect(getCurretStatus(), 'Player O won');
+    expect(getCurrentStatus(), 'Player O won');
   });
 
   test('Test getCurrent Status if its a draw', () {
@@ -60,7 +60,7 @@ void main() {
       [token.x, token.o, token.x],
       [token.o, token.x, token.o]
     ];
-    expect(getCurretStatus(), 'draw');
+    expect(getCurrentStatus(), 'draw');
   });
 
   test('Test getCurrent Status when next move is of Player O', () {
@@ -70,6 +70,6 @@ void main() {
       [token.x, token.o, token.x],
       [token.o, null, token.o]
     ];
-    expect(getCurretStatus(), 'Player X to move');
+    expect(getCurrentStatus(), 'Player X to move');
   });
 }
