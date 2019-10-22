@@ -183,6 +183,7 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    myController=AnimationController(duration: Duration(milliseconds: 500), vsync: this);
     // TODO: implement initState
     super.initState();
   }
