@@ -178,7 +178,7 @@ class OneBox extends StatefulWidget {
   _OneBoxState createState() => _OneBoxState();
 }
 
-class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin{
+class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
   AnimationController myController;
   @override
   Widget build(BuildContext context) {
