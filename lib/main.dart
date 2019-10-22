@@ -191,6 +191,8 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    CurvedAnimation smoothAnimation =
+        CurvedAnimation(parent: myController, curve: Curves.elasticInOut);
     return GestureDetector(
       onTap: () {
         widget.onPressed();
@@ -202,7 +204,7 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
             duration: Duration(milliseconds: 200),
             opacity: widget.buttonChild == null ? 0.0 : 1.0,
             child: ScaleTransition(
-                scale: Tween(begin: 2.5, end: 1.0).animate(myController),
+                scale: Tween(begin: 2.0, end: 1.0).animate(smoothAnimation),
                 child: widget.buttonChild)),
         margin: EdgeInsets.all(4),
         decoration: BoxDecoration(
