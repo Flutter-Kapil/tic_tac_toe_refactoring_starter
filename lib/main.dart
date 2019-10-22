@@ -70,7 +70,7 @@ class _TicTacToePageState extends State<TicTacToePage>
   }
 
   AnimationController statusTextController;
-  double endTweenValue = 1.0;
+  double endTweenValue = 2.0;
 
   @override
   void initState() {
@@ -86,13 +86,13 @@ class _TicTacToePageState extends State<TicTacToePage>
         statusTextController.forward();
       }
     });
-    // TODO: implement initState
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     CurvedAnimation smoothAnimation = CurvedAnimation(
-        parent: statusTextController, curve: Curves.elasticInOut);
+        parent: statusTextController, curve: Curves.easeInOutBack);
 
     return Scaffold(
       backgroundColor: Color(0xFFD6AA7C),
@@ -126,10 +126,8 @@ class _TicTacToePageState extends State<TicTacToePage>
                   scale: Tween(begin: 1.0, end: endTweenValue)
                       .animate(smoothAnimation),
                   child: Text(
-                    getCurrentStatus(endTweenValue, () {
-                      statusTextController.forward();
-                      setState(() {});
-                    }),
+                    getCurrentStatus(endTweenValue, 
+                      statusTextController.forward),
                     style: TextStyle(
                         fontSize: 25,
                         color: Colors.white.withOpacity(0.6),
@@ -188,6 +186,10 @@ class _TicTacToePageState extends State<TicTacToePage>
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
   void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
       board[r][c] = currentPlayer;
@@ -216,7 +218,6 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
   void initState() {
     myController =
         AnimationController(duration: Duration(milliseconds: 500), vsync: this);
-    // TODO: implement initState
     super.initState();
   }
 
@@ -231,12 +232,12 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
       },
       child: Container(
         alignment: Alignment.center,
-        child: AnimatedOpacity(
-            duration: Duration(milliseconds: 200),
-            opacity: widget.buttonChild == null ? 0.0 : 1.0,
-            child: ScaleTransition(
-                scale: Tween(begin: 2.5, end: 1.0).animate(smoothAnimation),
-                child: widget.buttonChild)),
+        child: FadeTransition(
+          opacity: myController,
+                  child: ScaleTransition(
+              scale: Tween(begin: 2.5, end: 1.0).animate(smoothAnimation),
+              child: widget.buttonChild),
+        ),
         margin: EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: widget.colors,
