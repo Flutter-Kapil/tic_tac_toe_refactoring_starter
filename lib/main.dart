@@ -178,7 +178,8 @@ class OneBox extends StatefulWidget {
   _OneBoxState createState() => _OneBoxState();
 }
 
-class _OneBoxState extends State<OneBox> {
+class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin{
+  AnimationController myController;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -188,7 +189,7 @@ class _OneBoxState extends State<OneBox> {
         child: AnimatedOpacity(
             duration: Duration(milliseconds: 200),
             opacity: widget.buttonChild == null ? 0.0 : 1.0,
-            child: widget.buttonChild),
+            child: ScaleTransition(child: widget.buttonChild)),
         margin: EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: widget.colors,
