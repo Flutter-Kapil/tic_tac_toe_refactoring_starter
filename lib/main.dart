@@ -180,6 +180,13 @@ class OneBox extends StatefulWidget {
 
 class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
   AnimationController myController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
