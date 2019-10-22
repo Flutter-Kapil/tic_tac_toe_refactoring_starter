@@ -18,6 +18,7 @@ class TicTacToePage extends StatefulWidget {
 
 class _TicTacToePageState extends State<TicTacToePage>
     with SingleTickerProviderStateMixin {
+      bool changeWinningStatusColor = false;
   Widget getIconFromToken(token t) {
     if (t == token.o) {
       return Icon(
@@ -126,11 +127,11 @@ class _TicTacToePageState extends State<TicTacToePage>
                   scale: Tween(begin: 1.0, end: endTweenValue)
                       .animate(smoothAnimation),
                   child: Text(
-                    getCurrentStatus(endTweenValue, 
+                    getCurrentStatus(changeWinningStatusColor,endTweenValue, 
                       statusTextController.forward),
                     style: TextStyle(
                         fontSize: 25,
-                        color: Colors.white.withOpacity(0.6),
+                        color: changeWinningStatusColor?Colors.yellow:Colors.white.withOpacity(0.6),
                         fontFamily: 'Quicksand'),
                   ),
                 ),
@@ -165,6 +166,9 @@ class _TicTacToePageState extends State<TicTacToePage>
                         color: Color(0xFF848AC1),
                         onPressed: () {
                           gameReset();
+                          // statusTextController.dispose();
+                        print('test');
+                          changeWinningStatusColor = false;
                           setState(() {});
                         },
                         child: Text("Reset",
