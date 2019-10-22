@@ -165,7 +165,7 @@ class _TicTacToePageState extends State<TicTacToePage> {
   }
 }
 
-class OneBox extends StatelessWidget {
+class OneBox extends StatefulWidget {
   final Widget buttonChild;
   final Function onPressed;
   final Color colors;
@@ -175,18 +175,23 @@ class OneBox extends StatelessWidget {
       this.colors = Colors.white24});
 
   @override
+  _OneBoxState createState() => _OneBoxState();
+}
+
+class _OneBoxState extends State<OneBox> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: widget.onPressed,
       child: Container(
         alignment: Alignment.center,
         child: AnimatedOpacity(
             duration: Duration(milliseconds: 200),
-            opacity: buttonChild == null ? 0.0 : 1.0,
-            child: buttonChild),
+            opacity: widget.buttonChild == null ? 0.0 : 1.0,
+            child: widget.buttonChild),
         margin: EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: colors,
+          color: widget.colors,
           borderRadius: BorderRadius.all(
             Radius.circular(14),
           ),
