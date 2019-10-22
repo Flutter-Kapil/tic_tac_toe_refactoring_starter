@@ -198,7 +198,8 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
         child: AnimatedOpacity(
             duration: Duration(milliseconds: 200),
             opacity: widget.buttonChild == null ? 0.0 : 1.0,
-            child: ScaleTransition(child: widget.buttonChild)),
+            child: ScaleTransition(
+                scale: myController, child: widget.buttonChild)),
         margin: EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: widget.colors,
