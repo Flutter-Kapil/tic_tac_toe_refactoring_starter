@@ -192,14 +192,18 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onPressed,
+      onTap: () {
+        widget.onPressed();
+        myController.forward();
+      },
       child: Container(
         alignment: Alignment.center,
         child: AnimatedOpacity(
             duration: Duration(milliseconds: 200),
             opacity: widget.buttonChild == null ? 0.0 : 1.0,
             child: ScaleTransition(
-                scale: myController, child: widget.buttonChild)),
+                scale: Tween(begin: 2.5, end: 1.0).animate(myController),
+                child: widget.buttonChild)),
         margin: EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: widget.colors,
