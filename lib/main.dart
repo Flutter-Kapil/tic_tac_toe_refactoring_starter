@@ -45,12 +45,6 @@ class _TicTacToePageState extends State<TicTacToePage>
         : Colors.white30;
   }
 
-  Widget winnerTextStatus(){
-      return ScaleTransition(
-        scale:  Tween(begin: 1.0, end: 2.3)
-                      .animate(statusTextController),
-        child: Text(getCurrentStatus()));
-  }
 
   Widget singleExpandedBox(int row, int col) {
     return Expanded(
@@ -79,32 +73,16 @@ class _TicTacToePageState extends State<TicTacToePage>
     );
   }
 
-  AnimationController statusTextController;
+
 
   @override
   void initState() {
-    statusTextController = AnimationController(
-      duration: Duration(milliseconds: 500),
-      vsync: this,
-    );
-    statusTextController
-        .addStatusListener((AnimationStatus buttonAnimationStatus) {
-      if (buttonAnimationStatus == AnimationStatus.completed) {
-        statusTextController.reverse();
-      } else if (buttonAnimationStatus == AnimationStatus.dismissed) {
-        statusTextController.forward();
-      }
-    });
-    statusTextController.addListener(() {
-      setState(() {});
-    });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    CurvedAnimation smoothAnimation = CurvedAnimation(
-        parent: statusTextController, curve: Curves.easeInOutBack);
 
     return Scaffold(
       backgroundColor: Color(0xFFD6AA7C),
@@ -138,10 +116,7 @@ class _TicTacToePageState extends State<TicTacToePage>
                   getCurrentStatus(),
                   style: TextStyle(
                       fontSize: 25,
-                      color: winnerCheck(board)
-                          ? ColorTween(begin: Colors.red, end: Colors.yellow)
-                              .transform(statusTextController.value)
-                          : Colors.white.withOpacity(0.6),
+                      color: Colors.white.withOpacity(0.6),
                       fontFamily: 'Quicksand'),
                 ),
               ),
@@ -174,11 +149,8 @@ class _TicTacToePageState extends State<TicTacToePage>
                       child: FlatButton(
                         color: Color(0xFF848AC1),
                         onPressed: () {
-                          gameReset();
-                          statusTextController.stop();
-                          endTweenValue =1.0;
+                          gameReset();     
                           print('test');
-                          changeWinningStatusColor = false;
                           setState(() {});
                         },
                         child: Text("Reset",
