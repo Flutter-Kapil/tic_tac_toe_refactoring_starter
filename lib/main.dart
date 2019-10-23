@@ -289,6 +289,7 @@ class _AnimatedStatusState extends State<AnimatedStatus> with SingleTickerProvid
     myController.addListener(() {
       setState(() {});
     });
+    myController.forward();
     super.initState();
   }
 
@@ -296,16 +297,8 @@ class _AnimatedStatusState extends State<AnimatedStatus> with SingleTickerProvid
   Widget build(BuildContext context) {
     CurvedAnimation smoothAnimation =
         CurvedAnimation(parent: myController, curve: Curves.bounceIn);
-    return GestureDetector(
-      onTap: () {
-        myController.forward();
-        setState(() {});
-      },
-      child: Container(
-        child: Transform.scale(
-          scale: Tween(begin: 1.0, end: 3.0).transform(smoothAnimation.value),
-          child:Text(getCurrentStatus(),style: TextStyle(fontSize:25,fontFamily: 'Quicksand',color: ColorTween(begin: Colors.red, end: Colors.blue).transform(myController.value),),),
-        ),
-      ),
+    return Transform.scale(
+      scale: Tween(begin: 1.0, end: 2.0).transform(smoothAnimation.value),
+      child:Text(getCurrentStatus(),style: TextStyle(fontSize:25,fontFamily: 'Quicksand',color: ColorTween(begin: Colors.white, end: Colors.red).transform(myController.value),),),
     );
   }}
