@@ -16,9 +16,11 @@ class TicTacToePage extends StatefulWidget {
   _TicTacToePageState createState() => _TicTacToePageState();
 }
 
+bool changeWinningStatusColor = false;
+double endTweenValue = 1.0;
+
 class _TicTacToePageState extends State<TicTacToePage>
     with SingleTickerProviderStateMixin {
-      bool changeWinningStatusColor = false;
   Widget getIconFromToken(token t) {
     if (t == token.o) {
       return Icon(
@@ -71,7 +73,6 @@ class _TicTacToePageState extends State<TicTacToePage>
   }
 
   AnimationController statusTextController;
-  double endTweenValue = 2.0;
 
   @override
   void initState() {
@@ -86,6 +87,9 @@ class _TicTacToePageState extends State<TicTacToePage>
       } else if (buttonAnimationStatus == AnimationStatus.dismissed) {
         statusTextController.forward();
       }
+    });
+    statusTextController.addListener(() {
+      setState(() {});
     });
     super.initState();
   }
@@ -125,13 +129,16 @@ class _TicTacToePageState extends State<TicTacToePage>
                 alignment: Alignment.topCenter,
                 child: ScaleTransition(
                   scale: Tween(begin: 1.0, end: endTweenValue)
-                      .animate(smoothAnimation),
+                      .animate(statusTextController),
                   child: Text(
-                    getCurrentStatus(changeWinningStatusColor,endTweenValue, 
-                      statusTextController.forward),
+                    getCurrentStatus(changeWinningStatusColor, endTweenValue,
+                        statusTextController.forward),
                     style: TextStyle(
                         fontSize: 25,
-                        color: changeWinningStatusColor?Colors.yellow:Colors.white.withOpacity(0.6),
+                        color: winnerCheck(board)
+                            ? ColorTween(begin: Colors.red, end: Colors.yellow)
+                                .transform(statusTextController.value)
+                            : Colors.white.withOpacity(0.6),
                         fontFamily: 'Quicksand'),
                   ),
                 ),
@@ -166,8 +173,9 @@ class _TicTacToePageState extends State<TicTacToePage>
                         color: Color(0xFF848AC1),
                         onPressed: () {
                           gameReset();
-                          // statusTextController.dispose();
-                        print('test');
+                          statusTextController.stop();
+                          endTweenValue =1.0;
+                          print('test');
                           changeWinningStatusColor = false;
                           setState(() {});
                         },
@@ -194,6 +202,7 @@ class _TicTacToePageState extends State<TicTacToePage>
   void dispose() {
     super.dispose();
   }
+
   void updateBox(int r, int c) {
     if (legitMove(board[r][c])) {
       board[r][c] = currentPlayer;
@@ -238,7 +247,7 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
         alignment: Alignment.center,
         child: FadeTransition(
           opacity: myController,
-                  child: ScaleTransition(
+          child: ScaleTransition(
               scale: Tween(begin: 2.5, end: 1.0).animate(smoothAnimation),
               child: widget.buttonChild),
         ),

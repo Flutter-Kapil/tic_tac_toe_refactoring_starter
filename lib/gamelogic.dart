@@ -145,6 +145,7 @@ String getCurrentStatus(bool x, double endTween, Function forward) {
     endTween = 2.5;
     forward();
     x = !x;
+    print('value of bool is $x and endTween is $endTween');
     return 'Player X won';
   }
   if (winnerCheck(board) && currentPlayer == token.o) {
