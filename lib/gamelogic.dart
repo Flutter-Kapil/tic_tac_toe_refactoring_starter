@@ -140,18 +140,11 @@ void changePlayerIfGameIsNotOver() {
   }
 }
 
-String getCurrentStatus(bool x, double endTween, Function forward) {
+String getCurrentStatus() {
   if (winnerCheck(board) && currentPlayer == token.x) {
-    endTween = 2.5;
-    forward();
-    x = !x;
-    print('value of bool is $x and endTween is $endTween');
     return 'Player X won';
   }
   if (winnerCheck(board) && currentPlayer == token.o) {
-    endTween = 2.5;
-    x =!x;
-    forward();
     return 'Player O won';
   }
   if (fullBoard(board)) {

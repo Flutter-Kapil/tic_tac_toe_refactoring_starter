@@ -45,6 +45,13 @@ class _TicTacToePageState extends State<TicTacToePage>
         : Colors.white30;
   }
 
+  Widget winnerTextStatus(){
+      return ScaleTransition(
+        scale:  Tween(begin: 1.0, end: 2.3)
+                      .animate(statusTextController),
+        child: Text(getCurrentStatus()));
+  }
+
   Widget singleExpandedBox(int row, int col) {
     return Expanded(
       child: OneBox(
@@ -127,20 +134,15 @@ class _TicTacToePageState extends State<TicTacToePage>
               flex: 1,
               child: Container(
                 alignment: Alignment.topCenter,
-                child: ScaleTransition(
-                  scale: Tween(begin: 1.0, end: endTweenValue)
-                      .animate(statusTextController),
-                  child: Text(
-                    getCurrentStatus(changeWinningStatusColor, endTweenValue,
-                        statusTextController.forward),
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: winnerCheck(board)
-                            ? ColorTween(begin: Colors.red, end: Colors.yellow)
-                                .transform(statusTextController.value)
-                            : Colors.white.withOpacity(0.6),
-                        fontFamily: 'Quicksand'),
-                  ),
+                child: winnerCheck(board)?AnimatedStatus():Text(
+                  getCurrentStatus(),
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: winnerCheck(board)
+                          ? ColorTween(begin: Colors.red, end: Colors.yellow)
+                              .transform(statusTextController.value)
+                          : Colors.white.withOpacity(0.6),
+                      fontFamily: 'Quicksand'),
                 ),
               ),
             ),
@@ -262,3 +264,48 @@ class _OneBoxState extends State<OneBox> with SingleTickerProviderStateMixin {
     );
   }
 }
+
+
+class AnimatedStatus extends StatefulWidget{
+  @override
+  _AnimatedStatusState createState() => _AnimatedStatusState();
+}
+
+class _AnimatedStatusState extends State<AnimatedStatus> with SingleTickerProviderStateMixin{
+
+  AnimationController myController;
+  @override
+  void initState() {
+    myController =
+        AnimationController(duration: Duration(milliseconds: 500), vsync: this);
+    //add status listener to get blinking effect
+    myController.addStatusListener((AnimationStatus buttonAnimationStatus) {
+      if (buttonAnimationStatus == AnimationStatus.completed) {
+        myController.reverse();
+      } else if (buttonAnimationStatus == AnimationStatus.dismissed) {
+        myController.forward();
+      }
+    });
+    myController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    CurvedAnimation smoothAnimation =
+        CurvedAnimation(parent: myController, curve: Curves.bounceIn);
+    return GestureDetector(
+      onTap: () {
+        myController.forward();
+        setState(() {});
+      },
+      child: Container(
+        child: Transform.scale(
+          scale: Tween(begin: 1.0, end: 3.0).transform(smoothAnimation.value),
+          child:Text(getCurrentStatus(),style: TextStyle(fontSize:25,fontFamily: 'Quicksand',color: ColorTween(begin: Colors.red, end: Colors.blue).transform(myController.value),),),
+        ),
+      ),
+    );
+  }}
